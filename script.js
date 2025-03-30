@@ -1,3 +1,4 @@
+
   // Sistema de Mensagens
   let messageArray = [
     "Bom. Parece que você realmente chegou até aqui.",
@@ -8,7 +9,8 @@
   ];
 
   let postStarMessages = [
-    "Bem melhor..."
+    "Bem melhor agora.",
+    "Mova o mouse ao redor da tela."
   ]
 
   let textPosition = 0;
@@ -118,22 +120,30 @@
   let touchInput = false;
 
   function iniciarAnimacaoEstrelas() {
-    canvas.classList.add('show-stars');
-
-    setTimeout(() => {
-      document.getElementById('gradient-bg').style.opacity = '1';
-    }, 500);
-
+    document.getElementById('gradient-bg').style.opacity = '1';
+    canvas.classList.add('show-stars')
     generate();
     resize();
     step();
-
+    
     // Event listeners para interação
     window.onresize = resize;
     canvas.onmousemove = onMouseMove;
     canvas.ontouchmove = onTouchMove;
     canvas.ontouchend = onMouseLeave;
     document.onmouseleave = onMouseLeave;
+
+    setTimeout(() => {
+      index = 0;
+      textPosition = 0;
+      messageArray = postStarMessages;
+
+      let messageElement = document.querySelector("#message");
+      messageElement.style.opacity = "1";
+      messageElement.classList.remove('fade-out', 'fade-in');
+
+      typewriter();
+    }, 3000);
   }
 
   function generate() {
