@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undertale Clone</title>
+    <style>
+        body { background-color: black; overflow: hidden; }
+        #game {
+            width: 800px;
+            height: 600px;
+            background-color: #222;
+            position: relative;
+            margin: auto;
+            border: 2px solid white;
+        }
+        #player {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            position: absolute;
+            top: 280px;
+            left: 380px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div id="player"></div>
+    </div>
+    <script>
+        let player = document.getElementById("player");
+        let posX = 380, posY = 280;
+        let speed = 10;
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowRight") posX += speed;
+            if (event.key === "ArrowLeft") posX -= speed;
+            if (event.key === "ArrowUp") posY -= speed;
+            if (event.key === "ArrowDown") posY += speed;
+
+            player.style.left = posX + "px";
+            player.style.top = posY + "px";
+        });
+    </script>
+</body>
+</html>
