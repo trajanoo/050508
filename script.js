@@ -1,3 +1,4 @@
+let faseAtual = "inicial"; // ou "estrelas"
 
   // Sistema de Mensagens
   let messageArray = [
@@ -10,7 +11,28 @@
 
   let postStarMessages = [
     "Bem melhor agora.",
-    "Mova o mouse ao redor da tela."
+    "Mova o mouse ao redor da tela.",
+    "Na minha visão, eu te enxergo assim.",
+    "Um universo inteiro.",
+    "Um universo que sempre me facinou.",
+    "Um universo que talvez eu ainda não saiba como funciona direito.",
+    "Mas que me cativa mais e mais a cada segundo, por mais que eu não demonstre as vezes.",
+    "Não vou falar de mim aqui, afinal, isso nunca foi sobre mim.",
+    "Mas só quero que saiba de uma coisa...",
+    "Tu é de longe a pessoa que mais mudou minha vida.",
+    "E sinto como se tudo girasse em torno de você.",
+    "Nem eu entendo pra ser sincero.",
+    "Pronto, lá tá eu falando de mim de novo🙄",
+    "Parece até que o aniversário é meu KKKKKKK",
+    "Mas enfim...",
+    "Todos já nascem com um fardo para se viver.",
+    "Não sei qual é o fardo que você carrega",
+    "Mas independente do que seja, eu quero te ajudar a carregar.",
+    "Aproveita o seu aniversário, bebezuda.",
+    "Eu te amo. e tenho medo que você nunca saiba o quanto.",
+    "Feliz 17!",
+    "Com amor, [seu nome].",
+    "Brincadeira, é o Trajano."
   ]
 
   let textPosition = 0;
@@ -18,21 +40,21 @@
   let index = 0;
   let isTyping = false;
   let waitingForInput = false;
-
   function typewriter() {
     isTyping = true;
     let messageElement = document.querySelector("#message");
-    
+  
     messageElement.style.opacity = "1";
     messageElement.innerHTML =
       messageArray[index].substring(0, textPosition) + "<span>\u25ae</span>";
-
+  
     if (textPosition++ < messageArray[index].length) {
       setTimeout(typewriter, speed);
     } else {
       isTyping = false;
-
-      if (index === 1) {
+  
+      // Se estiver na fase inicial e for a mensagem que exige interação (índice 1)
+      if (faseAtual === "inicial" && index === 1) {
         waitingForInput = true;
         const handleKeyPress = () => {
           if (waitingForInput) {
@@ -50,10 +72,16 @@
         }, 1000);
       }
     }
-  }
+  }  
 
   function untypewriter() {
     let messageElement = document.querySelector("#message");
+    
+    // Verifica se é a última mensagem (índice do array postStarMessages)
+    if (faseAtual === "estrelas" && index === postStarMessages.length - 1) {
+      messageElement.innerHTML = postStarMessages[index] + "<span>\u25ae</span>"; // Mantém o cursor piscando
+      return; // Sai da função sem apagar
+    }
     
     if (textPosition > 0) {
       textPosition--;
@@ -69,7 +97,7 @@
         } else {
           typewriter();
         }
-      } else {
+      } else if (faseAtual === "inicial") {
         iniciarAnimacaoEstrelas();
       }
     }
@@ -120,6 +148,16 @@
   let touchInput = false;
 
   function iniciarAnimacaoEstrelas() {
+    faseAtual = "estrelas";
+    index = 0;
+    textPosition = 0;
+    messageArray = postStarMessages;
+    
+    const bgMusic = document.getElementById('bg-music');
+    bgMusic.volume = 0.5;
+    bgMusic.play().catch(e => {
+      console.warn("Usuário precis interagir pra tocar o áudio: ", e)
+    })
     document.getElementById('gradient-bg').style.opacity = '1';
     canvas.classList.add('show-stars')
     generate();
